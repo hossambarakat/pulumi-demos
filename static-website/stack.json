@@ -1,0 +1,69 @@
+{
+    "version": 3,
+    "deployment": {
+        "manifest": {
+            "time": "2020-02-23T16:57:22.26082+11:00",
+            "magic": "536e9da7300013be2eb488e82ca78e9e93182d32bc2a3811616f7751b29ebfd3",
+            "version": "v1.11.0"
+        },
+        "secrets_providers": {
+            "type": "service",
+            "state": {
+                "url": "https://api.pulumi.com",
+                "owner": "hossambarakat",
+                "project": "static-website",
+                "stack": "dev"
+            }
+        },
+        "resources": [
+            {
+                "urn": "urn:pulumi:dev::static-website::pulumi:pulumi:Stack::static-website-dev",
+                "custom": false,
+                "type": "pulumi:pulumi:Stack",
+                "outputs": {
+                    "Site-Url": "https://staticwebsite0d46aeec.z13.web.core.windows.net/",
+                    "connectionString": "DefaultEndpointsProtocol=https;AccountName=staticwebsite0d46aeec;AccountKey=P8nQXkO5j+qvxFCCze5qi4yYqr6wf+CrybeKpy5zK0bRYrbJiKQziDSUgHOVaDaR3eYaJQCEzwUHebIJjLol/w==;EndpointSuffix=core.windows.net"
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::static-website::pulumi:providers:azure::default_1_14_0",
+                "custom": true,
+                "id": "ca1975f7-967c-409d-98c5-8b543b227afb",
+                "type": "pulumi:providers:azure",
+                "inputs": {
+                    "location": "eastus",
+                    "version": "1.14.0"
+                },
+                "outputs": {
+                    "location": "eastus",
+                    "version": "1.14.0"
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::static-website::azure:core/resourceGroup:ResourceGroup::staticwebsite-rg",
+                "custom": true,
+                "id": "/subscriptions/e58df433-c112-4157-8d84-6c757768670e/resourceGroups/staticwebsite-rg22eb3fd3",
+                "type": "azure:core/resourceGroup:ResourceGroup",
+                "inputs": {
+                    "__defaults": [
+                        "location",
+                        "name"
+                    ],
+                    "location": "eastus",
+                    "name": "staticwebsite-rg22eb3fd3"
+                },
+                "outputs": {
+                    "id": "/subscriptions/e58df433-c112-4157-8d84-6c757768670e/resourceGroups/staticwebsite-rg22eb3fd3",
+                    "location": "eastus",
+                    "name": "staticwebsite-rg22eb3fd3",
+                    "tags": {}
+                },
+                "parent": "urn:pulumi:dev::static-website::pulumi:pulumi:Stack::static-website-dev",
+                "provider": "urn:pulumi:dev::static-website::pulumi:providers:azure::default_1_14_0::ca1975f7-967c-409d-98c5-8b543b227afb"
+            }
+        ],
+        "pending_operations": [
+            
+        ]
+    }
+}
