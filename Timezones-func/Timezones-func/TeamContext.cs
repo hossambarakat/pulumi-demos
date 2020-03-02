@@ -1,20 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 
-namespace Timezones_func
+namespace TeamTimeZones
 {
     public class TeamContext: DbContext
     {
-        public DbSet<TeamMember> TeamMembers {get;set;}
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public TeamContext(DbContextOptions<TeamContext> options)
+            : base(options)
         {
-            optionsBuilder.UseCosmos(accountEndpoint: "https://timezonesdemo.documents.azure.com:443/", accountKey:"odKFs0qGxm7SYLSjRFpUtvFJkvYaBcL4uUoMW23u0NwwC1SrchjgX2XUMSuv2jmFGap3qN4jyfdqBRGTqLp2EQ==",
-             databaseName:"TeamTimezones");
 
         }
+        public DbSet<TeamMember> TeamMembers {get;set;}
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<TeamMember>(x=>x.ToContainer("Team"));
+            modelBuilder.Entity<TeamMember>(x=>x.ToContainer("TeamMember"));
             modelBuilder.Entity<TeamMember>()
                 .HasNoDiscriminator()
                 .HasPartitionKey(x=>x.TimeZone);

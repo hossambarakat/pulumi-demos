@@ -1,6 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timezones-func", "Timezones-func\Timezones-func.csproj", "{F2CA3245-03A7-4EAD-82E4-5DED0B3FBF29}"
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29806.167
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TeamTimeZones", "Timezones-func\TeamTimeZones.csproj", "{F2CA3245-03A7-4EAD-82E4-5DED0B3FBF29}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -12,5 +15,11 @@ Global
 		{F2CA3245-03A7-4EAD-82E4-5DED0B3FBF29}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2CA3245-03A7-4EAD-82E4-5DED0B3FBF29}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2CA3245-03A7-4EAD-82E4-5DED0B3FBF29}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9DF3373E-DFED-4334-AA47-5C1C75E13963}
 	EndGlobalSection
 EndGlobal
