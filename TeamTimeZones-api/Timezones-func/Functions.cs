@@ -8,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using System.Linq;
 using System.Collections.Generic;
+using System;
 
 namespace TeamTimeZones
 {
@@ -17,7 +18,7 @@ namespace TeamTimeZones
 
         public Functions(TeamContext teamContext)
         {
-            this.context = teamContext;
+            context = teamContext;
         }
         [FunctionName("AddTeamMember")]
         public async Task<IActionResult> RunAddTeamMemberAsync(
@@ -27,12 +28,12 @@ namespace TeamTimeZones
         {
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var member = JsonConvert.DeserializeObject<TeamMember>(requestBody);
-
-            context.Add(member);
+            member.Id = Guid.NewGuid().ToString();
+            context.TeamMembers.Add(member);
 
             await context.SaveChangesAsync();
 
-            return new CreatedResult("member/{Name}", member.Name);
+            return new CreatedResult("member/{Name}", "");
         }
 
         [FunctionName("ListTeamMembers")]
@@ -60,27 +61,26 @@ namespace TeamTimeZones
 
             return new OkResult();
         }
-        [FunctionName("UpdateTeamMember")]
-        public async Task<IActionResult> RunUpdateTeamMemberAsync(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "members/{id}")]
-            HttpRequest req,
-            string id,
-            ILogger log)
-        {
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            var member = JsonConvert.DeserializeObject<TeamMember>(requestBody);
+        //[FunctionName("UpdateTeamMember")]
+        //public async Task<IActionResult> RunUpdateTeamMemberAsync(
+        //    [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "members/{id}")]
+        //    HttpRequest req,
+        //    string id,
+        //    ILogger log)
+        //{
+        //    string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
+        //    var member = JsonConvert.DeserializeObject<TeamMember>(requestBody);
 
-            var existingMember = await context.TeamMembers.FindAsync(id);
-            existingMember.Name = member.Name;
-            existingMember.TimeZone = member.TimeZone;
-            existingMember.Country = member.Country;
+        //    var existingMember = await context.TeamMembers.FindAsync(id);
+        //    existingMember.Name = member.Name;
+        //    existingMember.TimeZone = member.TimeZone;
+        //    existingMember.Country = member.Country;
 
-            context.TeamMembers.Update(existingMember);
+        //    context.TeamMembers.Update(existingMember);
 
-            await context.SaveChangesAsync();
+        //    await context.SaveChangesAsync();
 
-            return new OkResult();
-
-        }
+        //    return new OkResult();
+        //}
     }
 }

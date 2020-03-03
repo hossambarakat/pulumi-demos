@@ -1,37 +1,28 @@
 import React from 'react'
 import moment from 'moment-timezone';
-class Timezone extends React.Component {
+const Timezone = ({timezone, time, onDelete}) => {
+  var localTime = moment(time).tz(timezone.timeZone);
+  var displayTime = localTime ? localTime.format('hh:mma z') : 'Unknown';
+  var offset = localTime ? localTime.format('Z') : '??:??';
 
-
-  render() {
-    // We clone the time object itself so the this time is bound to
-    // the global app time
-    var localTime   = moment( this.props.time ).tz( this.props.timezone.tz );
-    var fmtString = 'hh:mma z'
-    var displayTime = localTime ? localTime.format(fmtString) : 'Unknown';
-    var offset      = localTime ? localTime.format('Z') : '??:??';
-    var hour        = localTime ? localTime.hour() : 'unknown';
-
-    var timezoneClasses = 'timezone timezone-hour-' + hour;
-
-    return (
-      <div className={timezoneClasses}>
-        <div className="timezone-header">
-          <h3 className="timezone-time">{displayTime}</h3>
-          <p className="timezone-offset">{offset}</p>
-        </div>
-        <div className="timezone-people">
-        {this.props.timezone.people.map(function(person, idx){
-            return (
-              <div className="timezone-people-column" key={"column-" + idx}>
-                <div>{person.name} - {person.location}</div>
-              </div>
-            );
-          }.bind(this))}
-        </div>
+  return (
+    <div>
+      <div >
+        <h3>{displayTime}</h3>
+        <p>{offset}</p>
       </div>
-    );
-  }
+      <div>
+        {timezone.people.map(function (person, idx) {
+          return (
+            <div key={"column-" + idx}>
+              <div>{person.name} - {person.location}</div>
+              <button type="button" onClick={() => onDelete(person.id)}>Delete</button>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
 }
 
 export default Timezone;

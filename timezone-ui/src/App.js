@@ -45,6 +45,7 @@ function App() {
       ]
     }
   ];
+  
   return (
     <div className="App">
       <TimezoneList timezones={timezones}/>
