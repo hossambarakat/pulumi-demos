@@ -3,12 +3,37 @@ import Timezone from './timezone';
 import { loadMembers, addMember, deleteMember } from '../api';
 import { useEffect } from "react";
 import { useState } from "react";
+import Button from '@material-ui/core/Button';
+import { makeStyles } from '@material-ui/core/styles';
+
+import TextField from '@material-ui/core/TextField';
+import Select from '@material-ui/core/Select';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+
+
+import { zones } from '../timezones';
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    '& > *': {
+      margin: theme.spacing(1),
+    },
+  },
+  formControl: {
+    margin: theme.spacing(1),
+    minWidth: 120,
+  },
+}));
+
 
 const TimezoneList = ({ time }) => {
   const [name, setName] = useState('');
   const [country, setCountry] = useState('');
   const [timeZone, setTimeZone] = useState('');
   const [timeZones, setTimeZones] = useState([]);
+  const classes = useStyles();
+
 
   useEffect(() => {
     loadMembers()
@@ -36,27 +61,33 @@ const TimezoneList = ({ time }) => {
 
   return (
     <div>
-      <div>
+      <div className={classes.root}>
         <div>
-          Name:
-          <input type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}></input>
+          <TextField label="Name" value={name} onChange={(e) => setName(e.target.value)} />
         </div>
         <div>
-          Country:
-          <input type="text"
-            value={country}
-            onChange={(e) => setCountry(e.target.value)}></input>
+          <TextField label="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
         </div>
         <div>
-          Timezone:
-          <input type="text"
+        <FormControl className={classes.formControl}>
+
+          <InputLabel>TimeZone</InputLabel>
+          <Select
+            native
             value={timeZone}
-            onChange={(e) => setTimeZone(e.target.value)}></input>
+            onChange={e => setTimeZone(e.target.value)}
+          >
+            <option value="" />
+            {zones.map((zone) =>
+              <option value={zone}>{zone}</option>
+            )}
+          </Select>
+          </FormControl>
         </div>
         <div>
-          <button type="submit" onClick={onSubmit}>Submit</button>
+          <Button variant="contained" onClick={onSubmit} color="primary">
+            Add
+          </Button>
         </div>
       </div>
       <div >

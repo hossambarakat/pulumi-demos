@@ -1,6 +1,10 @@
 import React from 'react'
 import moment from 'moment-timezone';
-const Timezone = ({timezone, time, onDelete}) => {
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+
+
+const Timezone = ({ timezone, time, onDelete }) => {
   var localTime = moment(time).tz(timezone.timeZone);
   var displayTime = localTime ? localTime.format('hh:mma z') : 'Unknown';
   var offset = localTime ? localTime.format('Z') : '??:??';
@@ -15,8 +19,14 @@ const Timezone = ({timezone, time, onDelete}) => {
         {timezone.people.map(function (person, idx) {
           return (
             <div key={"column-" + idx}>
-              <div>{person.name} - {person.location}</div>
-              <button type="button" onClick={() => onDelete(person.id)}>Delete</button>
+              <div>{person.name} - {person.country}
+                <IconButton aria-label="delete"
+                  onClick={() => onDelete(person.id)}
+                >
+                  <DeleteIcon />
+                </IconButton>
+              </div>
+
             </div>
           );
         })}
