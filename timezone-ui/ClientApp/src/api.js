@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const baseUrl = "http://localhost:7071/";
+const baseUrl = process.env.REACT_APP_BASE_URL || "http://localhost:7071/";
 
 export const loadMembers = async () => {
 var response = await axios.get(`${baseUrl}api/members`);

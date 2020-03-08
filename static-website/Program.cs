@@ -27,27 +27,24 @@ class Program
                 AccountKind = "StorageV2",
                 AccessTier = "Hot",
             });
-
-
-
             // We can't enable static sites using Pulumi (it's not exposed in the ARM API).
             // Therefore we have to invoke the Azure SDK from within the Pulumi code to enable the static sites 
             // The code in the Apply method must be idempotent.
             var containerName  = storageAccount.PrimaryBlobConnectionString.Apply(async v => await mEnableStaticSites(v) );
-            // Upload the files
-            // var files =  new[]{"index.html", "404.html"};
-            // foreach (var file in files)
-            // {
-            //     var uploadedFile = new Blob(file, new BlobArgs
-            //     {
-            //         Name = file,
-            //         StorageAccountName = storageAccount.Name,
-            //         StorageContainerName =containerName,
-            //         Type = "Block",
-            //         Source = $"./wwwroot/{file}",
-            //         ContentType = "text/html",
-            //     });
-            // }
+            //Upload the files
+            var files =  new[]{"index.html", "404.html"};
+            foreach (var file in files)
+            {
+                var uploadedFile = new Blob(file, new BlobArgs
+                {
+                    Name = file,
+                    StorageAccountName = storageAccount.Name,
+                    StorageContainerName =containerName,
+                    Type = "Block",
+                    Source = $"./wwwroot/{file}",
+                    ContentType = "text/html",
+                });
+            }
             // Upload the files
             // Export the Web address string for the storage account
             return new Dictionary<string, object>

@@ -1,0 +1,172 @@
+{
+    "version": 3,
+    "deployment": {
+        "manifest": {
+            "time": "2020-03-01T12:52:36.646408+11:00",
+            "magic": "90d8688bcb1de08d2d509b768cba3b143eeeca7d85f161fac966f3364586ed8a",
+            "version": "v1.11.1"
+        },
+        "secrets_providers": {
+            "type": "service",
+            "state": {
+                "url": "https://api.pulumi.com",
+                "owner": "hossambarakat",
+                "project": "serverless-app",
+                "stack": "dev"
+            }
+        },
+        "resources": [
+            {
+                "urn": "urn:pulumi:dev::serverless-app::pulumi:pulumi:Stack::serverless-app-dev",
+                "custom": false,
+                "type": "pulumi:pulumi:Stack",
+                "outputs": {
+                    "app-id": "/subscriptions/e58df433-c112-4157-8d84-6c757768670e/resourceGroups/rg-myteam6d12f481/providers/Microsoft.Web/sites/app-myteam59882fa7"
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::serverless-app::myteam:azure:ArchiveFunctionApp::asp-myteam",
+                "custom": false,
+                "type": "myteam:azure:ArchiveFunctionApp",
+                "parent": "urn:pulumi:dev::serverless-app::pulumi:pulumi:Stack::serverless-app-dev"
+            },
+            {
+                "urn": "urn:pulumi:dev::serverless-app::pulumi:providers:azure::default_1_14_0",
+                "custom": true,
+                "id": "3d374d1c-4776-4af9-a126-af29d6dc31e1",
+                "type": "pulumi:providers:azure",
+                "inputs": {
+                    "location": "WestUS",
+                    "version": "1.14.0"
+                },
+                "outputs": {
+                    "location": "WestUS",
+                    "version": "1.14.0"
+                }
+            },
+            {
+                "urn": "urn:pulumi:dev::serverless-app::azure:core/resourceGroup:ResourceGroup::rg-myteam",
+                "custom": true,
+                "id": "/subscriptions/e58df433-c112-4157-8d84-6c757768670e/resourceGroups/rg-myteam6d12f481",
+                "type": "azure:core/resourceGroup:ResourceGroup",
+                "inputs": {
+                    "__defaults": [
+                        "location",
+                        "name"
+                    ],
+                    "location": "WestUS",
+                    "name": "rg-myteam6d12f481"
+                },
+                "outputs": {
+                    "id": "/subscriptions/e58df433-c112-4157-8d84-6c757768670e/resourceGroups/rg-myteam6d12f481",
+                    "location": "westus",
+                    "name": "rg-myteam6d12f481",
+                    "tags": {}
+                },
+                "parent": "urn:pulumi:dev::serverless-app::pulumi:pulumi:Stack::serverless-app-dev",
+                "provider": "urn:pulumi:dev::serverless-app::pulumi:providers:azure::default_1_14_0::3d374d1c-4776-4af9-a126-af29d6dc31e1"
+            },
+            {
+                "urn": "urn:pulumi:dev::serverless-app::azure:cosmosdb/account:Account::myteam-cosmos",
+                "custom": true,
+                "id": "/subscriptions/e58df433-c112-4157-8d84-6c757768670e/resourceGroups/rg-myteam6d12f481/providers/Microsoft.DocumentDB/databaseAccounts/myteam-cosmos522e6d8b",
+                "type": "azure:cosmosdb/account:Account",
+                "inputs": {
+                    "__defaults": [
+                        "enableAutomaticFailover",
+                        "enableMultipleWriteLocations",
+                        "isVirtualNetworkFilterEnabled",
+                        "kind",
+                        "location",
+                        "name"
+                    ],
+                    "consistencyPolicy": {
+                        "__defaults": [
+                            "maxIntervalInSeconds",
+                            "maxStalenessPrefix"
+                        ],
+                        "consistencyLevel": "Session",
+                        "maxIntervalInSeconds": 5,
+                        "maxStalenessPrefix": 100
+                    },
+                    "enableAutomaticFailover": false,
+                    "enableMultipleWriteLocations": false,
+                    "geoLocations": [
+                        {
+                            "__defaults": [],
+                            "failoverPriority": 0,
+                            "location": "westus"
+                        }
+                    ],
+                    "isVirtualNetworkFilterEnabled": false,
+                    "kind": "GlobalDocumentDB",
+                    "location": "westus",
+                    "name": "myteam-cosmos522e6d8b",
+                    "offerType": "Standard",
+                    "resourceGroupName": "rg-myteam6d12f481"
+                },
+                "outputs": {
+                    "capabilities": [],
+                    "connectionStrings": [
+                        "AccountEndpoint=https://myteam-cosmos522e6d8b.documents.azure.com:443/;AccountKey=9XWF8qOoTskYodsauf0yRXbPr4rTYSoR4nYgQ6ScsJtQ7RqLCn3wkfGtyhJ6DgAG0mxuA9kVk3mJKPDETXtF2w==;",
+                        "AccountEndpoint=https://myteam-cosmos522e6d8b.documents.azure.com:443/;AccountKey=VILKi5DBtGns3id0rfrLXkysbmyskbaC1O6B9xAlpE6fe51DV6QjT4Ezk6M0Crzd112FVvsKDwLOnjWUVXIvDg==;",
+                        "AccountEndpoint=https://myteam-cosmos522e6d8b.documents.azure.com:443/;AccountKey=8Hds4WnmDHc4MgAmELTJX5jWDKfU67JDb9cLBPPvXQPf2Hgq8HJjgcpmZ4OrBTHZdqoTy4rvthnDC9H7Qd4QaA==;",
+                        "AccountEndpoint=https://myteam-cosmos522e6d8b.documents.azure.com:443/;AccountKey=aP81C3b5gCyqLRzkUaHkJudY6fVSjm0Qh7edv1IbspW0xpmHNaK7CfQNUnC7UINQdlxcB9ITCASFGsJXzFiBRg==;"
+                    ],
+                    "consistencyPolicy": {
+                        "consistencyLevel": "Session",
+                        "maxIntervalInSeconds": 5,
+                        "maxStalenessPrefix": 100
+                    },
+                    "enableAutomaticFailover": false,
+                    "enableMultipleWriteLocations": false,
+                    "endpoint": "https://myteam-cosmos522e6d8b.documents.azure.com:443/",
+                    "geoLocations": [
+                        {
+                            "failoverPriority": 0,
+                            "id": "myteam-cosmos522e6d8b-westus",
+                            "location": "westus",
+                            "prefix": ""
+                        }
+                    ],
+                    "id": "/subscriptions/e58df433-c112-4157-8d84-6c757768670e/resourceGroups/rg-myteam6d12f481/providers/Microsoft.DocumentDB/databaseAccounts/myteam-cosmos522e6d8b",
+                    "ipRangeFilter": "",
+                    "isVirtualNetworkFilterEnabled": false,
+                    "kind": "GlobalDocumentDB",
+                    "location": "westus",
+                    "name": "myteam-cosmos522e6d8b",
+                    "offerType": "Standard",
+                    "primaryMasterKey": "9XWF8qOoTskYodsauf0yRXbPr4rTYSoR4nYgQ6ScsJtQ7RqLCn3wkfGtyhJ6DgAG0mxuA9kVk3mJKPDETXtF2w==",
+                    "primaryReadonlyMasterKey": "8Hds4WnmDHc4MgAmELTJX5jWDKfU67JDb9cLBPPvXQPf2Hgq8HJjgcpmZ4OrBTHZdqoTy4rvthnDC9H7Qd4QaA==",
+                    "readEndpoints": [
+                        "https://myteam-cosmos522e6d8b-westus.documents.azure.com:443/"
+                    ],
+                    "resourceGroupName": "rg-myteam6d12f481",
+                    "secondaryMasterKey": "VILKi5DBtGns3id0rfrLXkysbmyskbaC1O6B9xAlpE6fe51DV6QjT4Ezk6M0Crzd112FVvsKDwLOnjWUVXIvDg==",
+                    "secondaryReadonlyMasterKey": "aP81C3b5gCyqLRzkUaHkJudY6fVSjm0Qh7edv1IbspW0xpmHNaK7CfQNUnC7UINQdlxcB9ITCASFGsJXzFiBRg==",
+                    "tags": {},
+                    "virtualNetworkRules": [],
+                    "writeEndpoints": [
+                        "https://myteam-cosmos522e6d8b-westus.documents.azure.com:443/"
+                    ]
+                },
+                "parent": "urn:pulumi:dev::serverless-app::pulumi:pulumi:Stack::serverless-app-dev",
+                "dependencies": [
+                    "urn:pulumi:dev::serverless-app::azure:core/resourceGroup:ResourceGroup::rg-myteam"
+                ],
+                "provider": "urn:pulumi:dev::serverless-app::pulumi:providers:azure::default_1_14_0::3d374d1c-4776-4af9-a126-af29d6dc31e1",
+                "propertyDependencies": {
+                    "consistencyPolicy": null,
+                    "geoLocations": null,
+                    "offerType": null,
+                    "resourceGroupName": [
+                        "urn:pulumi:dev::serverless-app::azure:core/resourceGroup:ResourceGroup::rg-myteam"
+                    ]
+                }
+            }
+        ],
+        "pending_operations": [
+            
+        ]
+    }
+}

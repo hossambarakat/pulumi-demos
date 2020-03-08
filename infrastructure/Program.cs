@@ -2,12 +2,14 @@
 using System.Threading.Tasks;
 
 using Pulumi;
-using Pulumi.Azure.AppService;
-using Pulumi.Azure.AppService.Inputs;
 using Pulumi.Azure.Core;
 using Pulumi.Azure.CosmosDB.Inputs;
 using serverless_app;
 using Pulumi.Azure.CosmosDB;
+using Microsoft.Azure.Storage;
+using Microsoft.Azure.Storage.Blob;
+using Microsoft.Azure.Storage.Shared.Protocol;
+using System;
 
 class Program
 {
@@ -25,6 +27,21 @@ class Program
             //create resource group
             var resourceGroup = new ResourceGroup($"rg-{prefix}");
             var name="myteam";
+
+            var staticWebsiteStorageAccount = new Pulumi.Azure.Storage.Account("mysite", new Pulumi.Azure.Storage.AccountArgs
+            {
+                ResourceGroupName = resourceGroup.Name,
+                EnableHttpsTrafficOnly = true,
+                AccountReplicationType = "LRS",
+                AccountTier = "Standard",
+                AccountKind = "StorageV2",
+                AccessTier = "Hot",
+            });
+
+            // We can't enable static sites using Pulumi (it's not exposed in the ARM API).
+            // Therefore we have to invoke the Azure SDK from within the Pulumi code to enable the static sites 
+            // The code in the Apply method must be idempotent.
+            var containerName  = staticWebsiteStorageAccount.PrimaryBlobConnectionString.Apply(async v => await mEnableStaticSites(v) );
 
 
         // Cosmos DB Account with multiple replicas
@@ -66,8 +83,12 @@ class Program
             });
             return new Dictionary<string, object?>
             {
-                { "app-id", archiveFunction.AppId}
+                { "app-id", archiveFunction.AppId},
+                { "connection", staticWebsiteStorageAccount.PrimaryBlobConnectionString},
+                { "url" , staticWebsiteStorageAccount.PrimaryWebEndpoint},
+                {"containerName", containerName}
             };
+            
 
             // //Create storage account
             // var storageAccount = new Account($"sa{prefix}",
@@ -139,4 +160,25 @@ class Program
             // };
         });
     }
+    static async Task<string> mEnableStaticSites(string connectionString)
+        {
+	        if (!Deployment.Instance.IsDryRun)
+	        {
+		        var sa = CloudStorageAccount.Parse(connectionString);
+
+		        var blobClient = sa.CreateCloudBlobClient();
+		        var blobServiceProperties = new ServiceProperties
+		        {
+			        StaticWebsite = new StaticWebsiteProperties
+			        {
+				        Enabled = true,
+				        IndexDocument = "index.html",
+				        ErrorDocument404Path = "404.html"
+			        }
+		        };
+		        await blobClient.SetServicePropertiesAsync(blobServiceProperties);
+	        }
+
+	        return "$web";
+        }
 }
