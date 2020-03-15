@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "serverless-app", "infrastructure\serverless-app.csproj", "{CB547CFB-0A3A-4085-94BD-C1CF04461154}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTimeZonesInfrastructure", "infrastructure\TeamTimeZonesInfrastructure.csproj", "{CB547CFB-0A3A-4085-94BD-C1CF04461154}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTimeZones", "TeamTimeZones-api\TeamTimeZones.csproj", "{84227B9E-EA9C-4610-8322-E85B647BDA7E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TeamTimeZones.Api", "TeamTimeZones-api\TeamTimeZones.Api.csproj", "{84227B9E-EA9C-4610-8322-E85B647BDA7E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastructure", "{600BDF2A-07BF-4040-B6FE-8DAD3FE3AC4A}"
 EndProject
