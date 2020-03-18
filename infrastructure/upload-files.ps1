@@ -1,12 +1,16 @@
 
 [CmdletBinding()]
 param (
-    [Parameter(Mandatory=$false)]
+    [Parameter(Mandatory=$true)]
     [string]
-    $ConnectionString = "DefaultEndpointsProtocol=https;AccountName=coolwebsite;AccountKey=yGeCYEe1WrFWkKD92euhY2+5otVr7bUlj7WjFD1zk0t8efobY0nNm52zVfmCcYLsH585WVxVMW/XOFHb5vuDZg==;EndpointSuffix=core.windows.net",
+    $ConnectionString,
+    [Parameter(Mandatory=$true)]
+    [string]
+    $BaseUrl,
+    
     [Parameter()]
     [string]
-    $BuildDirectory = "../timezone-ui"
+    $BuildDirectory = "../timezone-ui/ClientApp"
 )
 #Install-Module -Name Az -AllowClobber -Scope CurrentUser
 #Connect-AzAccount
@@ -17,7 +21,7 @@ $WebSASUrl = "$($context.BlobEndPoint)`$web$token"
 
 Push-Location $BuildDirectory
 
-$env:REACT_APP_BASE_URL = "http://www.hoselbos.com/"
+$env:REACT_APP_BASE_URL = $BaseUrl
 yarn build
 
 azcopy rm "$WebSASUrl" --recursive

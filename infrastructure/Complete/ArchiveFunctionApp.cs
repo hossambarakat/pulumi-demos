@@ -7,7 +7,10 @@ namespace TeamTimeZonesInfrastructure
 {
     public class ArchiveFunctionApp : ComponentResource
     {
-        public Output<string> AppId { get; private set; } = null;
+        public Output<string> AppId { get; private set; } = null!;
+        public Output<string> DefaultHostname { get; private set; } = null!;
+        
+        
 
         public ArchiveFunctionApp(string name, ArchiveFunctionAppArgs args, ResourceOptions? options = null)
             : base("myteam:azure:ArchiveFunctionApp", name, options)
@@ -69,11 +72,19 @@ namespace TeamTimeZonesInfrastructure
                     Location = args.FunctionAppLocation,
                     AppServicePlanId = appServicePlan.Id,
                     StorageConnectionString = storageAccount.PrimaryConnectionString,
-                    Version = "~2",
-                    AppSettings = args.AppSettings
+                    Version = "~3",
+                    AppSettings = args.AppSettings,
+                    SiteConfig = new FunctionAppSiteConfigArgs
+                    {
+                        Cors = new FunctionAppSiteConfigCorsArgs
+                        {
+                            AllowedOrigins = "*"
+                        }
+                    }
                 }, opts);
             
             this.AppId = app.Id;
+            this.DefaultHostname = app.DefaultHostname;
         }
     }
 

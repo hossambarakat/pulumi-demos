@@ -12,6 +12,9 @@ namespace TeamTimeZonesInfrastructure.Complete
         [Output()]
         public Output<string> StaticWebsiteConnection { get; private set; }
         
+        [Output()]
+        public Output<string> FunctionAppEndPoint { get; private set; }
+        
 
         public CompleteStack()
         {
@@ -50,6 +53,7 @@ namespace TeamTimeZonesInfrastructure.Complete
                         {"db-account-key", cosmosDatabaseOutput["db-account-key"].Apply(x => x.ToString())}
                     }
                 });
+            FunctionAppEndPoint = archiveFunction.DefaultHostname;
         }
         
     }

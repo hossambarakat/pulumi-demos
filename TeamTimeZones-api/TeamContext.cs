@@ -17,7 +17,7 @@ namespace TeamTimeZones
             modelBuilder.Entity<TeamMember>(x=>x.ToContainer("TeamMember"));
             modelBuilder.Entity<TeamMember>()
                 .HasNoDiscriminator()
-                .HasPartitionKey(x=>x.TimeZone);
+                .HasPartitionKey(x=> x.TimeZone);
         }
     }
     public class TeamMember

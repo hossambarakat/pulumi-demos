@@ -51,6 +51,7 @@ namespace TeamTimeZonesInfrastructure.Complete
                     ResourceGroupName = resourceGroupName,
                     AccountName = cosmosAccount.Name,
                     DatabaseName = database.Name,
+                    PartitionKeyPath = "/TimeZone"
                 });
             // CosmosEndPoint = cosmosAccount.Endpoint;
             // CosmosPrimaryMasterKey = cosmosAccount.PrimaryMasterKey;

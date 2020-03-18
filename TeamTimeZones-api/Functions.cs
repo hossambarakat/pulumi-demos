@@ -29,7 +29,7 @@ namespace TeamTimeZones
             string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
             var member = JsonConvert.DeserializeObject<TeamMember>(requestBody);
             member.Id = Guid.NewGuid().ToString();
-            context.TeamMembers.Add(member);
+            await context.TeamMembers.AddAsync(member);
 
             await context.SaveChangesAsync();
 
