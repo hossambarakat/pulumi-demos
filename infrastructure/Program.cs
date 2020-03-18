@@ -11,6 +11,9 @@ using Microsoft.Azure.Storage.Blob;
 using Microsoft.Azure.Storage.Shared.Protocol;
 using System;
 using TeamTimeZonesInfrastructure.Complete;
+using TeamTimeZonesInfrastructure.Step1;
+using TeamTimeZonesInfrastructure.Step2;
+using TeamTimeZonesInfrastructure.Step3;
 
 class Program
 {
@@ -23,7 +26,7 @@ class Program
 
     static Task<int> Main()
     {
-        return Deployment.RunAsync<CompleteStack>();
+        return Deployment.RunAsync<Step3Stack>();
         
         // return Deployment.RunAsync(() => {
         //     const string prefix="myteam";
