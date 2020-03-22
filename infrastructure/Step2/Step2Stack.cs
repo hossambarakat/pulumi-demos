@@ -16,7 +16,7 @@ namespace TeamTimeZonesInfrastructure.Step2
         {
             const string prefix = "teamtimezones";
             var config = new Config();
-            var location = config.Get("location") ?? "westus";
+            var location = config.Get("location") ?? "southeastasia";
 
             var resourceGroup = new ResourceGroup($"{prefix}-{Deployment.Instance.StackName}", new ResourceGroupArgs()
             {
