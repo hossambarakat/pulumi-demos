@@ -18,7 +18,7 @@ namespace TeamTimeZonesInfrastructure.Step3
 
         public Step3Stack()
         {
-            const string prefix = "teamtimezones";
+            const string prefix = Common.Prefix;
             var config = new Config();
             var location = config.Get("location") ?? "southeastasia";
 
@@ -46,7 +46,7 @@ namespace TeamTimeZonesInfrastructure.Step3
                     ResourceGroupName = resourceGroup.Name,
                     Prefix = prefix,
                     FunctionAppLocation = location,
-                    FunctionAppFileLocation = "../TeamTimeZones-api/bin/Debug/netcoreapp3.1/publish/",
+                    FunctionAppFileLocation = "../TeamTimeZones/bin/Debug/netcoreapp3.1/publish/",
                     AppSettings = new InputMap<string>
                     {
                         {"db-account-endpoint", cosmosDatabaseOutput["db-account-endpoint"].Apply(x => x.ToString())},

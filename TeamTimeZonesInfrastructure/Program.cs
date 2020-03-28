@@ -26,7 +26,7 @@ class Program
 
     static Task<int> Main()
     {
-        return Deployment.RunAsync<Step2Start>();
+        return Deployment.RunAsync<Step3Start>();
         
         // return Deployment.RunAsync(() => {
         //     const string prefix="myteam";
