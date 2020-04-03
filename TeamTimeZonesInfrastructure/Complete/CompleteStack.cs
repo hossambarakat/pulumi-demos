@@ -36,10 +36,11 @@ namespace TeamTimeZonesInfrastructure.Complete
             WebContainer = staticWebsiteOutput.WebContainer;
             StaticWebsiteConnection = staticWebsiteOutput.StaticWebsiteConnection;
 
-            // // Cosmos DB 
+            //Cosmos DB
             var cosmosDatabaseOutput = CosmosDatabase.Run(
                 resourceGroup.Name, prefix, resourceGroup.Location);
             
+            //Azure Function
             var archiveFunction = new ArchiveFunctionApp($"{prefix}-{Deployment.Instance.StackName}",
                 new ArchiveFunctionAppArgs
                 {

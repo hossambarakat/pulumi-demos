@@ -21,14 +21,17 @@ namespace TeamTimeZonesInfrastructure.Step2
             const string prefix = Common.Prefix;
             var config = new Config();
             var location = config.Get("location") ?? "southeastasia";
-            
+
+            #region Resource Group
             var resourceGroup = new ResourceGroup($"{prefix}-{Deployment.Instance.StackName}", new ResourceGroupArgs()
             {
                 Name = $"{prefix}-{Deployment.Instance.StackName}",
                 Location = location
             });
+            #endregion
+
+            #region Static Website
             var name = $"{prefix}{Deployment.Instance.StackName}web";
-            
             var staticWebsiteStorageAccount = new Pulumi.Azure.Storage.Account(
                 name,
                 new Pulumi.Azure.Storage.AccountArgs
@@ -44,10 +47,13 @@ namespace TeamTimeZonesInfrastructure.Step2
             
             WebContainer =
                 staticWebsiteStorageAccount.PrimaryBlobConnectionString.Apply(async v => await EnableStaticSites(v));
-            
+            #endregion
+
+            #region Cosmos DB
             string accountName = $"{prefix}-{Deployment.Instance.StackName}";
             string databaseName = "TeamTimeZones";
             string containerName = "TeamMember";
+            #region Account
             var cosmosAccount = new Account(accountName,
                 new AccountArgs
                 {
@@ -60,7 +66,9 @@ namespace TeamTimeZonesInfrastructure.Step2
                     OfferType = "Standard",
                     ConsistencyPolicy = new AccountConsistencyPolicyArgs {ConsistencyLevel = "Session"},
                 });
+            #endregion
 
+            #region Database
             var database = new SqlDatabase(databaseName,
                 new SqlDatabaseArgs
                 {
@@ -69,7 +77,9 @@ namespace TeamTimeZonesInfrastructure.Step2
                     AccountName = cosmosAccount.Name
                     
                 });
+            #endregion
 
+            #region Container
             var container = new SqlContainer($"{prefix}-{Deployment.Instance.StackName}",
                 new SqlContainerArgs
                 {
@@ -79,8 +89,10 @@ namespace TeamTimeZonesInfrastructure.Step2
                     DatabaseName = database.Name,
                     PartitionKeyPath = "/TimeZone"
                 });
+            #endregion
+            #endregion
         }
-        
+
         static async Task<string> EnableStaticSites(string connectionString)
         {
             if (!Deployment.Instance.IsDryRun)

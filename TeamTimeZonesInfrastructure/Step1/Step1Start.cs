@@ -16,14 +16,19 @@ namespace TeamTimeZonesInfrastructure.Step1
         public Step1Start()
         {
             const string prefix = Common.Prefix;
+            
             var config = new Config();
             var location = config.Get("location") ?? "southeastasia";
 
+            #region Resource Group
             var resourceGroup = new ResourceGroup($"{prefix}-{Deployment.Instance.StackName}", new ResourceGroupArgs()
             {
                 Name = $"{prefix}-{Deployment.Instance.StackName}",
                 Location = location
             });
+            #endregion
+
+            #region Storage Account
             var name = $"{prefix}{Deployment.Instance.StackName}web";
             var staticWebsiteStorageAccount = new Pulumi.Azure.Storage.Account(
                 name,
@@ -37,11 +42,14 @@ namespace TeamTimeZonesInfrastructure.Step1
                     AccountKind = "StorageV2",
                     AccessTier = "Hot"
                 });
-            
+            #endregion
+
+            #region Enable Static Website
             WebContainer =
                 staticWebsiteStorageAccount.PrimaryBlobConnectionString.Apply(async v => await EnableStaticSites(v));
+            #endregion
         }
-        
+
         static async Task<string> EnableStaticSites(string connectionString)
         {
             if (!Deployment.Instance.IsDryRun)

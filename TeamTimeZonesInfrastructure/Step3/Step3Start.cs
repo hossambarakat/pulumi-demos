@@ -27,14 +27,17 @@ namespace TeamTimeZonesInfrastructure.Step3
             const string prefix = Common.Prefix;
             var config = new Config();
             var location = config.Get("location") ?? "southeastasia";
-            
+
+            #region Resource Group
             var resourceGroup = new ResourceGroup($"{prefix}-{Deployment.Instance.StackName}", new ResourceGroupArgs()
             {
                 Name = $"{prefix}-{Deployment.Instance.StackName}",
                 Location = location
             });
             var name = $"{prefix}{Deployment.Instance.StackName}web";
-            
+            #endregion
+
+            #region Static Website
             var staticWebsiteStorageAccount = new Pulumi.Azure.Storage.Account(
                 name,
                 new Pulumi.Azure.Storage.AccountArgs
@@ -47,16 +50,19 @@ namespace TeamTimeZonesInfrastructure.Step3
                     AccountKind = "StorageV2",
                     AccessTier = "Hot"
                 });
-            
+
             WebContainer =
                 staticWebsiteStorageAccount.PrimaryBlobConnectionString.Apply(async v => await EnableStaticSites(v));
             StaticWebsiteConnection = staticWebsiteStorageAccount.PrimaryBlobConnectionString;
+            #endregion
 
-            // // Cosmos DB 
+            #region Cosmos DB
             var cosmosDatabaseOutput = CosmosDatabase.Run(
                 resourceGroup.Name, prefix, resourceGroup.Location);
-            
-            //Create storage account
+            #endregion
+
+            #region Azure Function
+            #region Storage Account
             var storageAccount = new Account($"sa{prefix}{Deployment.Instance.StackName}",
                 new AccountArgs
                 {
@@ -66,8 +72,9 @@ namespace TeamTimeZonesInfrastructure.Step3
                     AccountReplicationType = "LRS",
                     AccountTier = "Standard"
                 });
+            #endregion
 
-            //Create an app server plan
+            #region App Service Plan
             var appServicePlan = new Plan($"asp-{prefix}{Deployment.Instance.StackName}",
                 new PlanArgs
                 {
@@ -81,13 +88,17 @@ namespace TeamTimeZonesInfrastructure.Step3
                         Size = "Y1"
                     }
                 });
+            #endregion
 
+            #region Storage Container
             var container = new Container($"func-code", new ContainerArgs
             {
                 StorageAccountName = storageAccount.Name,
                 ContainerAccessType = "private",
             });
+            #endregion
 
+            #region Function Zip Blob
             var functionAppFileLocation = "../TeamTimeZones/bin/Debug/netcoreapp3.1/publish/";
             var blob = new ZipBlob($"func", new ZipBlobArgs
             {
@@ -96,10 +107,10 @@ namespace TeamTimeZonesInfrastructure.Step3
                 Type = "block",
                 Content = new FileArchive(functionAppFileLocation),
             });
+            #endregion
 
+            #region Function App
             var codeBlobUrl = SharedAccessSignature.SignedBlobReadUrl(blob, storageAccount);
-
-            //Create Function Application
             var app = new FunctionApp($"app-{prefix}",
                 new FunctionAppArgs
                 {
@@ -124,8 +135,10 @@ namespace TeamTimeZonesInfrastructure.Step3
                         }
                     }
                 });
-            
+
             this.FunctionAppEndPoint = app.DefaultHostname;
+            #endregion
+            #endregion
         }
 
         static async Task<string> EnableStaticSites(string connectionString)
