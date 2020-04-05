@@ -10,7 +10,7 @@ param (
     
     [Parameter()]
     [string]
-    $BuildDirectory = "../timezone-ui/ClientApp"
+    $BuildDirectory = "../TeamTimeZones/ClientApp"
 )
 #Install-Module -Name Az -AllowClobber -Scope CurrentUser
 #Connect-AzAccount

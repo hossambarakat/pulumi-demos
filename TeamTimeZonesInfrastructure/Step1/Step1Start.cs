@@ -18,7 +18,7 @@ namespace TeamTimeZonesInfrastructure.Step1
             const string prefix = Common.Prefix;
             
             var config = new Config();
-            var location = config.Get("location") ?? "southeastasia";
+            var location = config.Get("location") ?? "australiaeast";
 
             #region Resource Group
             var resourceGroup = new ResourceGroup($"{prefix}-{Deployment.Instance.StackName}", new ResourceGroupArgs()
