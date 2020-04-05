@@ -61,26 +61,5 @@ namespace TeamTimeZones
 
             return new OkResult();
         }
-        //[FunctionName("UpdateTeamMember")]
-        //public async Task<IActionResult> RunUpdateTeamMemberAsync(
-        //    [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "members/{id}")]
-        //    HttpRequest req,
-        //    string id,
-        //    ILogger log)
-        //{
-        //    string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-        //    var member = JsonConvert.DeserializeObject<TeamMember>(requestBody);
-
-        //    var existingMember = await context.TeamMembers.FindAsync(id);
-        //    existingMember.Name = member.Name;
-        //    existingMember.TimeZone = member.TimeZone;
-        //    existingMember.Country = member.Country;
-
-        //    context.TeamMembers.Update(existingMember);
-
-        //    await context.SaveChangesAsync();
-
-        //    return new OkResult();
-        //}
     }
 }
