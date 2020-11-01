@@ -17,10 +17,10 @@ namespace TeamTimeZonesInfrastructure.Complete
         public Output<string> WebContainer { get; private set; }
         [Output]
         public Output<string> StaticWebsiteConnection { get; private set; }
-        public StaticWebsite(string name, StaticWebsiteArgs args, ResourceOptions? options = null) 
+        public StaticWebsite(string name, StaticWebsiteArgs args, ComponentResourceOptions? options = null) 
             : base("teamtimezones:azure:staticwebsite", name, options)
         {
-            var opts = CustomResourceOptions.Merge(options, new CustomResourceOptions { Parent = this });
+            var opts =  new CustomResourceOptions { Parent = this };
             var staticWebsiteStorageAccount = new Pulumi.Azure.Storage.Account(
                 name,
                 new Pulumi.Azure.Storage.AccountArgs

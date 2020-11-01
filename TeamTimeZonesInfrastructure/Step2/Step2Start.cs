@@ -59,9 +59,9 @@ namespace TeamTimeZonesInfrastructure.Step2
                 {
                     Name = accountName,
                     ResourceGroupName = resourceGroup.Name,
-                    GeoLocations = new List<AccountGeoLocationsArgs>
+                    GeoLocations = new List<AccountGeoLocationArgs>
                     {
-                        new AccountGeoLocationsArgs {Location = location, FailoverPriority = 0}
+                        new AccountGeoLocationArgs {Location = location, FailoverPriority = 0}
                     },
                     OfferType = "Standard",
                     ConsistencyPolicy = new AccountConsistencyPolicyArgs {ConsistencyLevel = "Session"},
