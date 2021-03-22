@@ -100,12 +100,12 @@ namespace TeamTimeZonesInfrastructure.Step3
 
             #region Function Zip Blob
             var functionAppFileLocation = "../TeamTimeZones/bin/Debug/netcoreapp3.1/publish/";
-            var blob = new ZipBlob($"func", new ZipBlobArgs
+            var blob = new Blob($"func", new BlobArgs
             {
                 StorageAccountName = storageAccount.Name,
                 StorageContainerName = container.Name,
                 Type = "block",
-                Content = new FileArchive(functionAppFileLocation),
+                Source = new FileArchive(functionAppFileLocation),
             });
             #endregion
 

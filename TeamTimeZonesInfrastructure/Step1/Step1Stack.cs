@@ -8,9 +8,7 @@ namespace TeamTimeZonesInfrastructure.Step1
     //Demo 1 - Static Website
     public class Step1Stack: Stack
     {
-        [Output()]
-        public Output<string> WebContainer { get; private set; }
-        [Output()]
+        [Output]
         public Output<string> StaticWebsiteConnection { get; private set; }
         
         public Step1Stack()
@@ -30,7 +28,7 @@ namespace TeamTimeZonesInfrastructure.Step1
             {
                 StorageAccountName = resourceGroup.Name
             });
-            WebContainer = staticWebsiteOutput.WebContainer;
+            
             StaticWebsiteConnection = staticWebsiteOutput.StaticWebsiteConnection;
         }
     }

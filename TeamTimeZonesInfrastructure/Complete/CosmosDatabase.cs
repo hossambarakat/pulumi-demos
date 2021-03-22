@@ -27,9 +27,9 @@ namespace TeamTimeZonesInfrastructure.Complete
                 {
                     Name = accountName,
                     ResourceGroupName = resourceGroupName,
-                    GeoLocations = new List<AccountGeoLocationsArgs>
+                    GeoLocations = new List<AccountGeoLocationArgs>
                     {
-                        new AccountGeoLocationsArgs {Location = location, FailoverPriority = 0}
+                        new AccountGeoLocationArgs {Location = location, FailoverPriority = 0}
                     },
                     OfferType = "Standard",
                     ConsistencyPolicy = new AccountConsistencyPolicyArgs {ConsistencyLevel = "Session"},

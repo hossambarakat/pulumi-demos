@@ -12,10 +12,10 @@ namespace TeamTimeZonesInfrastructure
         
         
 
-        public ArchiveFunctionApp(string name, ArchiveFunctionAppArgs args, ResourceOptions? options = null)
+        public ArchiveFunctionApp(string name, ArchiveFunctionAppArgs args, ComponentResourceOptions? options = null)
             : base("myteam:azure:ArchiveFunctionApp", name, options)
         {
-            var opts = CustomResourceOptions.Merge(options, new CustomResourceOptions { Parent = this });
+            var opts =  new CustomResourceOptions { Parent = this };
             var prefix = args.Prefix;
 
             //Create storage account
@@ -27,7 +27,7 @@ namespace TeamTimeZonesInfrastructure
                     Location = args.FunctionAppLocation,
                     AccountReplicationType = "LRS",
                     AccountTier = "Standard"
-                },opts);
+                }, opts);
 
             //Create an app server plan
             var appServicePlan = new Plan($"asp-{prefix}{Deployment.Instance.StackName}",
@@ -50,12 +50,12 @@ namespace TeamTimeZonesInfrastructure
                 ContainerAccessType = "private",
             },opts);
 
-            var blob = new ZipBlob($"func", new ZipBlobArgs
+            var blob = new Blob($"func", new BlobArgs
             {
                 StorageAccountName = storageAccount.Name,
                 StorageContainerName = container.Name,
-                Type = "block",
-                Content = new FileArchive(args.FunctionAppFileLocation),
+                Type = "Block",
+                Source = new FileArchive(args.FunctionAppFileLocation),
             },opts);
 
             var codeBlobUrl = SharedAccessSignature.SignedBlobReadUrl(blob, storageAccount);
@@ -71,7 +71,8 @@ namespace TeamTimeZonesInfrastructure
                     ResourceGroupName = args.ResourceGroupName,
                     Location = args.FunctionAppLocation,
                     AppServicePlanId = appServicePlan.Id,
-                    StorageConnectionString = storageAccount.PrimaryConnectionString,
+                    StorageAccountName = storageAccount.Name,
+                    StorageAccountAccessKey = storageAccount.PrimaryAccessKey,
                     Version = "~3",
                     AppSettings = args.AppSettings,
                     SiteConfig = new FunctionAppSiteConfigArgs
@@ -98,7 +99,7 @@ namespace TeamTimeZonesInfrastructure
 
         public InputMap<string> AppSettings
         {
-            get => _appSettings ?? (_appSettings = new InputMap<string>());
+            get => _appSettings ??= new InputMap<string>();
             set => _appSettings = value;
         }
     }
