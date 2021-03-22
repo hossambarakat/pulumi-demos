@@ -7,9 +7,7 @@ namespace TeamTimeZonesInfrastructure.Step2
 {
     public class Step2Stack: Stack
     {
-        [Output()]
-        public Output<string> WebContainer { get; private set; }
-        [Output()]
+        [Output]
         public Output<string> StaticWebsiteConnection { get; private set; }
 
         public Step2Stack()
@@ -30,7 +28,6 @@ namespace TeamTimeZonesInfrastructure.Step2
                 {
                     StorageAccountName = resourceGroup.Name
                 });
-            WebContainer = staticWebsiteOutput.WebContainer;
             StaticWebsiteConnection = staticWebsiteOutput.StaticWebsiteConnection;
 
             // // Cosmos DB 

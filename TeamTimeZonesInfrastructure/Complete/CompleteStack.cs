@@ -7,12 +7,10 @@ namespace TeamTimeZonesInfrastructure.Complete
 {
     public class CompleteStack : Stack
     {
-        [Output()]
-        public Output<string> WebContainer { get; private set; }
-        [Output()]
+        [Output]
         public Output<string> StaticWebsiteConnection { get; private set; }
         
-        [Output()]
+        [Output]
         public Output<string> FunctionAppEndPoint { get; private set; }
         
 
@@ -33,7 +31,6 @@ namespace TeamTimeZonesInfrastructure.Complete
             {
                 StorageAccountName = resourceGroup.Name
             });
-            WebContainer = staticWebsiteOutput.WebContainer;
             StaticWebsiteConnection = staticWebsiteOutput.StaticWebsiteConnection;
 
             //Cosmos DB

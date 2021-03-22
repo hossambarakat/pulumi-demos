@@ -71,7 +71,8 @@ namespace TeamTimeZonesInfrastructure
                     ResourceGroupName = args.ResourceGroupName,
                     Location = args.FunctionAppLocation,
                     AppServicePlanId = appServicePlan.Id,
-                    StorageConnectionString = storageAccount.PrimaryConnectionString,
+                    StorageAccountName = storageAccount.Name,
+                    StorageAccountAccessKey = storageAccount.PrimaryAccessKey,
                     Version = "~3",
                     AppSettings = args.AppSettings,
                     SiteConfig = new FunctionAppSiteConfigArgs
