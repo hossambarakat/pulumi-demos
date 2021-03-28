@@ -1,4 +1,4 @@
-name: Pulumi
+name: Static Website Pulumi
 on:
   pull_request:
     paths:
@@ -7,13 +7,15 @@ jobs:
   preview:
     name: Preview
     runs-on: ubuntu-latest
+    defaults:
+    run:
+      working-directory: StaticWebsite
     steps:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 1
       - name: Install Pulumi CLI
-        uses: pulumi/action-install-pulumi-cli@v1
-      - run: npm install
+        uses: pulumi/action-install-pulumi-cli@@v1.0.1
       - uses: pulumi/actions@v2
         # env:
         #   PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
