@@ -16,6 +16,12 @@ jobs:
           fetch-depth: 1
       - name: Install Pulumi CLI
         uses: pulumi/action-install-pulumi-cli@v1.0.1
+      - name: Create local stack
+        run: |
+          pulumi stack select dev --create
+        working-directory: .github/test-stacks/dotnet
+        env:
+          PULUMI_CONFIG_PASSPHRASE: ${{ secrets.PULUMI_CONFIG_PASSPHRASE }}
       - name: Preview Changes
         uses: pulumi/actions@v2
         with:
