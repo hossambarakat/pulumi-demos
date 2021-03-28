@@ -18,6 +18,7 @@ jobs:
         uses: pulumi/action-install-pulumi-cli@v1.0.1
       - name: Preview Changes
         uses: pulumi/actions@v2
+        work-dir: ./StaticWebsite
         with:
           command: preview
           stack-name: dev
