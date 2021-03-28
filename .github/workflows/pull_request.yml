@@ -8,8 +8,8 @@ jobs:
     name: Preview
     runs-on: ubuntu-latest
     defaults:
-    run:
-      working-directory: StaticWebsite
+      run:
+        working-directory: StaticWebsite
     steps:
       - uses: actions/checkout@v2
         with:
