@@ -1,9 +1,8 @@
 using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
-using Pulumi;
-using Pulumi.Azure.Core;
-using Pulumi.Azure.Storage;
+using Pulumi.AzureNative.Resources;
+using Pulumi.AzureNative.Storage;
 using Pulumi.Testing;
 using Shouldly;
 using Xunit;
@@ -12,18 +11,18 @@ namespace StaticWebsite.Tests
 {
     public class StaticWebsiteTests
     {
-        private static Task<ImmutableArray<Resource>> TestAsync()
+        private static Task<ImmutableArray<Pulumi.Resource>> TestAsync()
         {
-            return Deployment.TestAsync<WebsiteStack>(new Mocks(), new TestOptions {IsPreview = false});
+            return Pulumi.Deployment.TestAsync<WebsiteStack>(new Mocks(), new TestOptions {IsPreview = false});
         }
         
         [Fact]
         public async Task ResourceGroup_ShouldExist()
         {
             var resources = await TestAsync();
-            
+
             var resourceGroups = resources.OfType<ResourceGroup>().ToList();
-            
+
             resourceGroups.Count.ShouldBe(1, "website resource group expected");
         }
         

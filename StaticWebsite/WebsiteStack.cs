@@ -1,9 +1,7 @@
-using System.Collections.Generic;
-using System.Collections.Immutable;
 using Pulumi;
-using Pulumi.Azure.Core;
-using Pulumi.Azure.Storage;
-using Pulumi.Azure.Storage.Inputs;
+using Pulumi.AzureNative.Resources;
+using Pulumi.AzureNative.Storage;
+using Pulumi.AzureNative.Storage.Inputs;
 
 namespace StaticWebsite
 {
@@ -20,36 +18,44 @@ namespace StaticWebsite
             });
 
             // Create an Azure Storage Account
-            var storageAccount = new Account("mysite", new AccountArgs
+            var storageAccount = new StorageAccount("mysite", new StorageAccountArgs
             {
                 ResourceGroupName = resourceGroup.Name,
                 EnableHttpsTrafficOnly = true,
-                AccountReplicationType = "LRS",
-                AccountTier = "Standard",
-                AccountKind = "StorageV2",
-                AccessTier = "Hot",
-                StaticWebsite = new AccountStaticWebsiteArgs
+                Sku = new SkuArgs
                 {
+                    Name = SkuName.Standard_LRS
+                },
+                AccessTier = AccessTier.Hot,
+                Kind = Kind.StorageV2,
+            });
+
+            var storageAccountStaticWebsite = new StorageAccountStaticWebsite("mysite",
+                new StorageAccountStaticWebsiteArgs
+                {
+                    ResourceGroupName = resourceGroup.Name,
+                    AccountName = storageAccount.Name,
                     IndexDocument = "index.html",
                     Error404Document = "404.html"
-                }
-            });
+                });
+            
             //Upload the files
             var files =  new[]{"index.html", "404.html"};
             foreach (var file in files)
             {
                 var uploadedFile = new Blob(file, new BlobArgs
                 {
-                    Name = file,
-                    StorageAccountName = storageAccount.Name,
-                    StorageContainerName = "$web",
-                    Type = "Block",
+                    ResourceGroupName = resourceGroup.Name,
+                    AccountName = storageAccount.Name,
+                    ContainerName = storageAccountStaticWebsite.ContainerName,
+                    Type = BlobType.Block,
                     Source =  new FileAsset($"./wwwroot/{file}"),
                     ContentType = "text/html"
                 });
             }
+
             // Export the Web address string for the storage account
-            PrimaryWebEndpoint = storageAccount.PrimaryWebEndpoint;
+            PrimaryWebEndpoint = storageAccount.PrimaryEndpoints.Apply(x=>x.Web);
         }
         [Output]
         public Output<string> PrimaryWebEndpoint { get; private set; }

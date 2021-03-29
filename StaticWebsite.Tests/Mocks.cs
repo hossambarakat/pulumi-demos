@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Threading.Tasks;
 using Pulumi.Testing;
@@ -19,11 +20,21 @@ namespace StaticWebsite.Tests
             if (!inputs.ContainsKey("name"))
                 outputs.Add("name", name);
             
-            if (type == "azure:storage/account:Account")
+            if (type == "azure-native:storage:StorageAccount")
             {
                 // ... set its web endpoint property.
                 // Normally this would be calculated by Azure, so we have to mock it.
-                outputs.Add("primaryWebEndpoint", $"https://{name}.web.core.windows.net");
+                outputs.Add("primaryEndpoints", new Dictionary<string, object?>
+                {
+                    {"blob", "BlobEndpoint"},
+                    {"dfs", "DfsEndpoint"},
+                    {"file", "FileEndpoint"},
+                    {"internetEndpoints", null},
+                    {"microsoftEndpoints", null},
+                    {"queue", "QueueEndpoint"},
+                    {"table", "TableEndpoint"},
+                    {"web", $"https://{name}.web.core.windows.net"},
+                });
             }
             
             // Default the resource ID to `{name}_id`.
