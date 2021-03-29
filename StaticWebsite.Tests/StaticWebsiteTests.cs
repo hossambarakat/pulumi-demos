@@ -32,7 +32,7 @@ namespace StaticWebsite.Tests
             var resources = await TestAsync();
             var resourceGroup = resources.OfType<ResourceGroup>().First();
 
-            var tags = resourceGroup.Tags.GetValue();
+            var tags = await resourceGroup.Tags.GetValueAsync();
             tags.ShouldNotBeNull("Tags must be defined");
             tags.ShouldContainKey("Environment");
         }
@@ -52,7 +52,7 @@ namespace StaticWebsite.Tests
             var resources = await TestAsync();
             var stack = resources.OfType<WebsiteStack>().First();
 
-            var endpoint = stack.PrimaryWebEndpoint.GetValue();
+            var endpoint = await stack.PrimaryWebEndpoint.GetValueAsync();
             endpoint.ShouldBe("https://mysite.web.core.windows.net");
         }
     }
