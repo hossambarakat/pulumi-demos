@@ -37,6 +37,7 @@ namespace StaticWebsite
             {
                 var uploadedFile = new Blob($"{name}-{file}", new BlobArgs
                 {
+                    BlobName = file,
                     ResourceGroupName = resourceGroupName,
                     AccountName = storageAccount.Name,
                     ContainerName = staticWebsite.ContainerName,
