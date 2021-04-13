@@ -10,11 +10,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{84962F64
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Website", "Website", "{53ED9759-273C-409E-9139-BE4B2980AFDA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "static-website", "static-website\static-website.csproj", "{63C1BDEB-3EED-48F8-AE45-AB013E1C9C93}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticWebsite", "StaticWebsite\StaticWebsite.csproj", "{63C1BDEB-3EED-48F8-AE45-AB013E1C9C93}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleInfrastructure", "SampleInfrastructure\SampleInfrastructure.csproj", "{5F8E7ED2-49A1-4613-8067-7186000FCC0B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleInfrastructure.Tests", "SampleInfrastructure.Tests\SampleInfrastructure.Tests.csproj", "{B2100846-3472-47C7-9372-A579CA515E8A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StaticWebsite.Tests", "StaticWebsite.Tests\StaticWebsite.Tests.csproj", "{0CCB0B6D-14E7-4554-8C73-9BC79E819C18}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,6 +48,10 @@ Global
 		{B2100846-3472-47C7-9372-A579CA515E8A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B2100846-3472-47C7-9372-A579CA515E8A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B2100846-3472-47C7-9372-A579CA515E8A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0CCB0B6D-14E7-4554-8C73-9BC79E819C18}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0CCB0B6D-14E7-4554-8C73-9BC79E819C18}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0CCB0B6D-14E7-4554-8C73-9BC79E819C18}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0CCB0B6D-14E7-4554-8C73-9BC79E819C18}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{84227B9E-EA9C-4610-8322-E85B647BDA7E} = {435BC00A-D06C-4C5D-9465-B020073B1857}
@@ -53,5 +59,6 @@ Global
 		{63C1BDEB-3EED-48F8-AE45-AB013E1C9C93} = {53ED9759-273C-409E-9139-BE4B2980AFDA}
 		{5F8E7ED2-49A1-4613-8067-7186000FCC0B} = {84962F64-0704-4A87-B5BF-4F098D13ACCA}
 		{B2100846-3472-47C7-9372-A579CA515E8A} = {84962F64-0704-4A87-B5BF-4F098D13ACCA}
+		{0CCB0B6D-14E7-4554-8C73-9BC79E819C18} = {53ED9759-273C-409E-9139-BE4B2980AFDA}
 	EndGlobalSection
 EndGlobal
