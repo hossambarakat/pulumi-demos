@@ -5,9 +5,9 @@ namespace SampleInfrastructure
 {
     class Program
     {
-        static void Main(string[] args)
+        static Task<int> Main(string[] args)
         {
-            static Task<int> Main() => Deployment.RunAsync<MyStack>();
+            return Deployment.RunAsync<MyStack>();
         }
     }
 }

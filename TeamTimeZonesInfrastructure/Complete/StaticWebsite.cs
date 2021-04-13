@@ -9,7 +9,7 @@ namespace TeamTimeZonesInfrastructure.Complete
 {
     public class StaticWebsiteArgs
     {
-        public Input<string> StorageAccountName { get; set; }
+        public Input<string>? StorageAccountName { get; set; }
     }
     public class StaticWebsite : ComponentResource
     {
