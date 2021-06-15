@@ -1,6 +1,8 @@
+using System.Threading.Tasks;
 using Pulumi;
-using Pulumi.Azure.Core;
-using Pulumi.Azure.Storage;
+using Pulumi.AzureNative.Resources;
+using Pulumi.AzureNative.Storage;
+using Pulumi.AzureNative.Storage.Inputs;
 
 namespace SampleInfrastructure
 {
@@ -19,19 +21,32 @@ namespace SampleInfrastructure
             });
 
             // Create an Azure Storage Account
-            var storageAccount = new Account("storage", new AccountArgs
+            var storageAccount = new StorageAccount("storage", new StorageAccountArgs
             {
                 ResourceGroupName = resourceGroup.Name,
-                AccountReplicationType = "LRS",
-                AccountTier = "Standard"
+                Sku = new SkuArgs
+                {
+                    Name = SkuName.Standard_LRS
+                },
+                AccessTier = AccessTier.Hot,
+                Kind = Kind.StorageV2,
+            });
+            Output.Tuple(storageAccount.Name, resourceGroup.Name).Apply(async values =>
+            {
+                // Export the connection string for the storage account
+                var storageAccountKeysResult = await ListStorageAccountKeys.InvokeAsync(new ListStorageAccountKeysArgs()
+                {
+                    AccountName = values.Item1,
+                    ResourceGroupName = values.Item2
+                });
+                this.PrimaryStorageKey = Output.CreateSecret(storageAccountKeysResult.Keys[0].Value);
             });
 
-            // Export the connection string for the storage account
-            this.ConnectionString = storageAccount.PrimaryConnectionString;
         }
 
         [Output]
-        public Output<string> ConnectionString { get; set; }
+        public Output<string> PrimaryStorageKey { get; set; }
+        
     }
 
 }
